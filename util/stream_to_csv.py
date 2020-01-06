@@ -41,4 +41,9 @@ class Stream_To_CSV():
         payload = self.process_payload(data)
         with open(self.path, 'a', newline='') as file:
             fw = csv.writer(file, delimiter=',', quoting=csv.QUOTE_MINIMAL, quotechar='"')
-            fw.writerows(payload)
+            for row in payload:
+                try:
+                    fw.writerow(row)
+                except Exception as e:
+                    print("Could not write row to file, outputitng offending row")
+                    print(row)
